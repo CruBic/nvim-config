@@ -1,37 +1,33 @@
-require("crubic.remap")
-require("crubic.set")
-
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.g.mapleader = " "
 
--- set termguicolors to enable highlight groups
+require("crubic.set")
+require("crubic.lazy")
+
+require("lazy").setup("crubic.plugins")
+
+-- optionally enable 24-bit colour
 vim.opt.termguicolors = true
+vim.cmd.colorscheme "nord"
 
--- OR setup with some options
-require("nvim-tree").setup({
-  sort_by = "case_sensitive",
-  view = {
-    width = 35,
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
-  },
-  update_focused_file = {
-    enable = true
-  }
-})
-
-local opts = { noremap=true, silent=true }
-
-local function quickfix()
-    vim.lsp.buf.code_action({
-        filter = function(a) return a.isPreferred end,
-        apply = true
-    })
-end
-
-vim.keymap.set('n', '<leader>qf', quickfix, opts)
+require("crubic.remap")
+--
+-- local harpoon = require("harpoon")
+--
+-- -- REQUIRED
+-- harpoon:setup()
+-- -- REQUIRED
+--
+-- vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+-- vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+--
+-- vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
+-- vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
+-- vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
+-- vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
+--
+-- -- Toggle previous & next buffers stored within Harpoon list
+-- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+-- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
