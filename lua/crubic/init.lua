@@ -11,7 +11,6 @@ require("lazy").setup("crubic.plugins")
 -- optionally enable 24-bit colour
 vim.opt.termguicolors = true
 vim.cmd.colorscheme "nord"
-
 require("crubic.remap")
 --
 -- local harpoon = require("harpoon")
