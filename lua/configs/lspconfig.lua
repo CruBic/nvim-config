@@ -1,33 +1,51 @@
-local configs = require("nvchad.configs.lspconfig")
-
-local on_attach = configs.on_attach
-local on_init = configs.on_init
-local capabilities = configs.capabilities
+-- load defaults i.e lua_lsp
+require("nvchad.configs.lspconfig").defaults()
 
 local lspconfig = require "lspconfig"
-local servers = { "html", "cssls", "clangd", "angularls", "eslint", "yamlls", "sqlls", "docker_compose_language_service"}
 
+-- EXAMPLE
+local servers = { "html", "cssls", "ts_ls", "sqlls", "yamlls", 'eslint' }
+local nvlsp = require "nvchad.configs.lspconfig"
+
+-- lsps with default config
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
-    on_init = on_init,
-    on_attach = on_attach,
-    capabilities = capabilities,
+    on_attach = nvlsp.on_attach,
+    on_init = nvlsp.on_init,
+    capabilities = nvlsp.capabilities,
   }
 end
 
--- Custom setup for Angular
+-- Special configuration for Angular Language Server
 lspconfig.angularls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  -- Add the custom paths for your monorepo structure
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+  root_dir = lspconfig.util.root_pattern("angular.json", "project.json"),
   on_new_config = function(new_config)
+    -- Path to Mason's angular-language-server installation
+    local mason_path = vim.fn.expand("~/.local/share/nvim/mason/packages/angular-language-server")
+    -- Monorepo paths
+    local monorepo_root = "/Users/artembrusnik/repos/monorepo-frontend"
+
+    -- Tell the server to look in multiple potential locations
     new_config.cmd = {
-      "ngserver", 
-      "--stdio", 
-      "--tsProbeLocations", 
-      "/Users/artembrusnik/repos/monorepo-frontend/node_modules", 
-      "--ngProbeLocations", 
-      "/Users/artembrusnik/repos/monorepo-frontend/node_modules"
+      "ngserver",
+      "--stdio",
+      "--tsProbeLocations",
+      -- Look in Mason's installation
+      mason_path .. "/node_modules",
+      -- Look in monorepo root
+      monorepo_root .. "/node_modules",
+      -- Look in potential nested locations
+      monorepo_root .. "/src/node_modules",
+      monorepo_root .. "/packages/*/node_modules",
+      "--ngProbeLocations",
+      -- Same pattern for Angular packages
+      mason_path .. "/node_modules",
+      monorepo_root .. "/node_modules",
+      monorepo_root .. "/src/node_modules",
+      monorepo_root .. "/packages/*/node_modules"
     }
   end,
 }

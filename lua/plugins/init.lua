@@ -1,67 +1,25 @@
-local plugins = {
+return {
   {
-    "christoomey/vim-tmux-navigator",
-    lazy=false,
+    "stevearc/conform.nvim",
+    event = 'BufWritePre', -- uncomment for format on save
+    opts = require "configs.conform",
   },
+
+  -- These are some examples, uncomment them if you want to see them work!
   {
-  "neovim/nvim-lspconfig",
-   config = function()
-      require("nvchad.configs.lspconfig").defaults()
-      require "configs.lspconfig"
-   end,
-},
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "lua-language-server",
-        "eslintd",
-        "prettierd",
-        "html-lsp",
-        "typescript-language-server",
-        "angular-language-server",
-        "dot-language-server",
-        "json-lsp",
-        "sqlls",
-        "taplo",
-        "terraform-ls",
-        "yaml-language-server",
-      },
-    },
-  },
-  {
-    "nvimtools/none-ls.nvim",
-    event = "VeryLazy",
-    opts = function()
-      return require "configs.null-ls"
-    end,
-  },
-  {
-    "windwp/nvim-ts-autotag",
-    ft = {"javascript", "javascriptreact", "typescript", "typescriptreact"},
+    "neovim/nvim-lspconfig",
     config = function()
-      require("nvim-ts-autotag").setup()
+      require "configs.lspconfig"
     end,
   },
-{
+
+  {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {
-        -- defaults 
-        "vim",
-        "lua",
-        "vimdoc",
-
-        -- web dev 
-        "html",
-        "css",
-        "javascript",
-        "typescript",
-        "sql",
-        "yaml",
-        "angular"
+        "vim", "lua", "vimdoc",
+        "html", "css", "yaml", "typescript", "sql", "javascript", "angular"
       },
     },
   },
 }
-return plugins
