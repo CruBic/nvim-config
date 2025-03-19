@@ -26,7 +26,7 @@ lspconfig.angularls.setup {
     -- Path to Mason's angular-language-server installation
     local mason_path = vim.fn.expand("~/.local/share/nvim/mason/packages/angular-language-server")
     -- Monorepo paths
-    local monorepo_root = "/Users/artembrusnik/repos/monorepo-frontend"
+    local monorepo_root = "~/repos/monorepo-frontend"
 
     -- Tell the server to look in multiple potential locations
     new_config.cmd = {
