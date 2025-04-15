@@ -3,8 +3,8 @@ local options = {
     lua = { "styleua" },
     css = { "prettier" },
     html = { "prettier" },
-    javascript = { "prettierd", "prettier", stop_after_first = true },
-    typescript = { "prettierd", "prettier", stop_after_first = true },
+    javascript = { "eslint_d", "prettierd", "prettier", stop_after_first = true },
+    typescript = { "eslint_d", "prettierd", "prettier", stop_after_first = true },
   },
 
   format_on_save = {

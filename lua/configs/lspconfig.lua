@@ -4,7 +4,7 @@ require("nvchad.configs.lspconfig").defaults()
 local lspconfig = require "lspconfig"
 
 -- EXAMPLE
-local servers = { "html", "cssls", "ts_ls", "sqlls", "yamlls", 'eslint' }
+local servers = { "html", "cssls", "ts_ls", "sqlls", "yamlls" }
 local nvlsp = require "nvchad.configs.lspconfig"
 
 -- lsps with default config
@@ -15,6 +15,21 @@ for _, lsp in ipairs(servers) do
     capabilities = nvlsp.capabilities,
   }
 end
+
+lspconfig.eslint.setup {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+  settings = {
+    workingDirectory = { mode = "auto" },
+    eslint = {
+      parserOptions = {
+        sourceType = "module",
+        ecmaVersion = 2020
+      }
+    }
+  }
+}
 
 -- Special configuration for Angular Language Server
 lspconfig.angularls.setup {
