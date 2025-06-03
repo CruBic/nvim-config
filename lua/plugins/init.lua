@@ -5,7 +5,21 @@ return {
     opts = require "configs.conform",
   },
 
-
+{
+    "tpope/vim-dadbod",
+    lazy = true,
+    cmd = {
+      "DB",
+      "DBUI",
+      "DBUIToggle",
+      "DBUIAddConnection",
+      "DBUIFindBuffer",
+    },
+    dependencies = {
+      { "kristijanhusak/vim-dadbod-ui" },         -- UI for vim-dadbod
+      { "kristijanhusak/vim-dadbod-completion" }, -- SQL completion
+    },
+  },
 
   -- These are some examples, uncomment them if you want to see them work!
  {
@@ -20,6 +34,10 @@ return {
     opts = {
       view = {
         adaptive_size = true, -- Enable adaptive sizing
+      },
+      filters = {
+        dotfiles = false,
+        git_ignored = false,
       },
       -- Your other nvim-tree options...
     },

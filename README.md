@@ -10,3 +10,7 @@
 
 NOTE!!!
 Set MONOREPO_PATH vatiable in zshrc!
+
+If angular doesn't work:
+cd ~/.local/share/nvim/mason/packages/angular-language-server
+npm install @angular/language-service@latest
