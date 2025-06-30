@@ -20,6 +20,7 @@ lspconfig.eslint.setup {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
+  root_dir = lspconfig.util.root_pattern("package.json", ".eslintrc.js", ".eslintrc.json", "angular.json"),
   settings = {
     workingDirectory = { mode = "auto" },
     eslint = {
@@ -63,4 +64,15 @@ lspconfig.angularls.setup {
       monorepo_root .. "/packages/*/node_modules"
     }
   end,
+  init_options = {
+    typescript = {
+      preferences = {
+        includePackageJsonAutoImports = "auto",
+      }
+    },
+    -- Try specifying custom tsconfig patterns
+    tsconfig = {
+      configFilePath = "tsconfig.lib.json"
+    }
+  }
 }
